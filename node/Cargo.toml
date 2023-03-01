@@ -17,7 +17,7 @@ serde = { version = "1.0.152", features = ["derive"] }
 jsonrpsee = { version = "0.16.2", features = ["server"] }
 
 # Local
-parachain-template-runtime = { path = "../runtime" }
+parachain-template-runtime = { path = "../runtime/initial" }
 
 # Substrate
 frame-benchmarking = { git = "https://github.com/paritytech/substrate", "branch" = "polkadot-v0.9.37" }
