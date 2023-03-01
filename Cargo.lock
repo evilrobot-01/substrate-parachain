@@ -6174,7 +6174,6 @@ dependencies = [
  "pallet-collator-selection",
  "pallet-session",
  "pallet-sudo",
- "pallet-template",
  "pallet-timestamp",
  "pallet-transaction-payment",
  "pallet-transaction-payment-rpc-runtime-api",
