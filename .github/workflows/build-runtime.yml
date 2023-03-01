@@ -19,6 +19,7 @@ jobs:
         uses: chevdor/srtool-actions@v0.6.0
         with:
           chain: ${{ matrix.chain }}
+          package: parachain-template-${{ matrix.chain }}-runtime
       - name: Summary
         run: |
           echo Summary:
