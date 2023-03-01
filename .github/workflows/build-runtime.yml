@@ -31,5 +31,5 @@ jobs:
         with:
           name: ${{ matrix.chain }}-runtime-${{ github.sha }}
           path: |
-            ${{ matrix.chain }}*.wasm
+            *${{ matrix.chain }}*.wasm
             ${{ matrix.chain }}-srtool-digest.json
