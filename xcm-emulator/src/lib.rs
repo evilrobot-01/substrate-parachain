@@ -862,6 +862,7 @@ macro_rules! decl_test_networks {
 				fn init() {
 					// If Network has not been initialized yet, it gets initialized
 					if $crate::INITIALIZED.with(|b| b.borrow_mut().get(stringify!($name)).is_none()) {
+						// PDD: init message queues
 						$crate::INITIALIZED.with(|b| b.borrow_mut().insert(stringify!($name).to_string(), true));
 						$crate::DOWNWARD_MESSAGES.with(|b| b.borrow_mut().insert(stringify!($name).to_string(), $crate::VecDeque::new()));
 						$crate::DMP_DONE.with(|b| b.borrow_mut().insert(stringify!($name).to_string(), $crate::VecDeque::new()));
@@ -911,7 +912,7 @@ macro_rules! decl_test_networks {
 					use $crate::{DmpMessageHandler, Bounded};
 					use polkadot_parachain::primitives::RelayChainBlockNumber;
 
-					// PDD: process downward messages on destination parachains
+					// PDD: process downward messages to destination parachains
 					while let Some((to_para_id, messages))
 						= $crate::DOWNWARD_MESSAGES.with(|b| b.borrow_mut().get_mut(stringify!($name)).unwrap().pop_front()) {
 						$(
@@ -963,7 +964,7 @@ macro_rules! decl_test_networks {
 				fn process_upward_messages() {
 					use $crate::{Bounded, ProcessMessage, WeightMeter};
 					use sp_core::Encode;
-					// PDD: process upward messages on relay chain
+					// PDD: process upward messages to relay chain
 					while let Some((from_para_id, msg)) = $crate::UPWARD_MESSAGES.with(|b| b.borrow_mut().get_mut(stringify!($name)).unwrap().pop_front()) {
 						let mut weight_meter = WeightMeter::max_limit();
 						let _ =  <$relay_chain>::process_message(

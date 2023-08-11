@@ -12,15 +12,18 @@ fn overview() {
 	type RelayChain = Polkadot;
 	type Para = ParaA;
 
-	// PDD: xcm-emulator macros & traits
+	// PDD: under the hood of xcm-emulator
 	type TestExt = dyn xcm_emulator::TestExt;
+
+	// PDD: xcm-emulator macros: "macro_rules! decl_test_networks"
 
 	// PDD: xcm-emulator message queues etc.
 	let _messages = xcm_emulator::DOWNWARD_MESSAGES;
 
-	// PDD: use-case components
-	type RuntimeA = <ParaA as Parachain>::Runtime;
-	type Ping = cumulus_ping::Pallet<RuntimeA>;
+	// PDD: use-case components: ping
+	type ParaARuntime = <ParaA as Parachain>::Runtime;
+	type Ping = cumulus_ping::Pallet<ParaARuntime>;
+	type ParaBRuntime = <ParaB as Parachain>::Runtime;
 }
 
 // Ensure para A can ping para B
@@ -30,11 +33,12 @@ fn ping_pong() {
 	init_tracing();
 
 	// Send ping from para A to B
-	// PDD: execute_with impl > __impl_test_ext_for_parachain
+	// PDD: execute_with impl > "macro_rules! __impl_test_ext_for_parachain"
 	let pings = ParaA::execute_with(|| {
 		type RuntimeEvent = <ParaA as Parachain>::RuntimeEvent;
 		type RuntimeOrigin = <ParaA as Parachain>::RuntimeOrigin;
 
+		// PDD: send
 		assert_ok!(<ParaA as ParaAPallet>::Ping::send(
 			RuntimeOrigin::root(),
 			ParaB::para_id(),
@@ -82,6 +86,7 @@ fn init_tracing() {
 		// Add test tracing (from sp_tracing::init_for_tests()) but filtering for xcm logs only
 		let _ = tracing_subscriber::fmt()
 			.with_max_level(tracing::Level::TRACE)
+			// PDD: filter tracing output
 			// Comment out this line to see all traces
 			.with_env_filter(
 				vec![
