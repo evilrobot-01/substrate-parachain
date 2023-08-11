@@ -3,7 +3,12 @@ panic = "unwind"
 
 [workspace]
 members = [
+	"integration-tests",
 	"node",
 	"pallets/*",
-	"runtime",
+	"runtimes/*",
+	"xcm-emulator"
 ]
+
+[patch."https://github.com/paritytech/cumulus"]
+xcm-emulator = { path = "xcm-emulator" }
