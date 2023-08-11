@@ -1,0 +1,33 @@
+[package]
+name = "integration-tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# PDD: Tracing
+tracing = { version = "0.1.37" }
+tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
+
+# Substrate
+frame-support = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", default-features = false }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", default-features = false }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", default-features = false }
+
+# Cumulus
+cumulus-ping = { path = "../pallets/ping", default-features = false }
+integration-tests-common = { git = "https://github.com/paritytech/cumulus", branch = "polkadot-v1.0.0" }
+
+# Polkadot
+polkadot-parachain = { default-features = false, git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+xcm = { git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+xcm-executor = { git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+
+# PDD: Runtimes
+polkadot-runtime = { git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+kusama-runtime = { git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+rococo-runtime = { git = "https://github.com/paritytech/polkadot", branch = "release-v1.0.0" }
+para-a-runtime = { path = "../runtimes/a" }
+para-b-runtime = { path = "../runtimes/b" }
+
+# PDD: Local via Patch
+xcm-emulator = { path = "../xcm-emulator", default-features = false }
